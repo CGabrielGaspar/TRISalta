@@ -22,7 +22,8 @@ def calcular_parametros_tri(dados):
     habilidades_iniciais = dados.iloc[:, 1:].mean(axis=1).values
     for coluna in dados.columns[1:]:
         respostas = dados[coluna].astype(int)
-        popt, _ = curve_fit(func_logistica_3PL, habilidades_iniciais, respostas, bounds=(0, [4.0, 4.0, 1.0]), maxfev=10000)
+        popt, _ = curve_fit(func_logistica_3PL, habilidades_iniciais, respostas, bounds=(0, [4.0, 4.0, 1.0]),
+                            maxfev=10000)
         parametros.append(popt)
     return parametros
 
@@ -46,7 +47,9 @@ def calcular_notas_alunos(dados, parametros):
         nome = aluno['nome']
         respostas = np.array(aluno[1:])
         habilidade = habilidade_aluno(respostas, parametros)
-        nota_transformada = transformar_escala(habilidade, -4, 4, 0, 100)
+        print(habilidade)
+        nota_transformada = 202.6008424 + habilidade * 46.15773604
+        # nota_transformada = transformar_escala(habilidade, -4, 4, 0, 100)
         notas.append((nome, nota_transformada))
     return notas
 
